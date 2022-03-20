@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity
     private Button              steps;
     private Button              mute;
 
-    private MediaPlayer         bgm, flip, success, shuffle;
+    private MediaPlayer         bgm, flip, success, shuffle, victory;
     private SensorManager       mSensorManager;
     private SensorEventListener mSensorListener;
 
@@ -78,13 +78,14 @@ public class MainActivity extends AppCompatActivity
         flip    = MediaPlayer.create(MainActivity.this, R.raw.flip);
         success = MediaPlayer.create(MainActivity.this, R.raw.success);
         shuffle = MediaPlayer.create(MainActivity.this, R.raw.shuffle);
+        victory = MediaPlayer.create(MainActivity.this, R.raw.victory);
         bgm.setLooping(true);
         bgm.setVolume(0.5f, 0.5f);
         bgm.start();
 
         /* Init views and buttons */
-        title       = findViewById(R.id.textView);
-        colorIcons  = findViewById(R.id.color_icons);
+        title       = findViewById(R.id.title);
+        colorIcons  = findViewById(R.id.colorMatchLayout);
         reset       = findViewById(R.id.reset);
         steps       = findViewById(R.id.steps);
         mute        = findViewById(R.id.mute);
@@ -198,8 +199,10 @@ public class MainActivity extends AppCompatActivity
             }
             if (btn.getTag().equals(buttons[i].getTag()) && pressedArray[i]) // Found a match
             {
-                success.start();
-                matchCount++;
+                if (matchCount++ != 5)
+                {
+                    success.start();
+                }
                 addColorIcon(btn);
                 pressedArray[i] = false;
                 pressedArray[index] = false;
@@ -220,6 +223,7 @@ public class MainActivity extends AppCompatActivity
         }
         else if (matchCount == 6) // Finished
         {
+            victory.start();
             title.setText(getResources().getString(R.string.victory));
             for (int i = 0; i < animalsArray.length; i++)
             {
