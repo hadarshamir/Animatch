@@ -37,7 +37,6 @@
 
         <ImageButton
             android:id="@+id/imageButton1"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -49,7 +48,6 @@
 
         <ImageButton
             android:id="@+id/imageButton2"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -61,7 +59,6 @@
 
         <ImageButton
             android:id="@+id/imageButton3"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -73,7 +70,6 @@
 
         <ImageButton
             android:id="@+id/imageButton4"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -85,7 +81,6 @@
 
         <ImageButton
             android:id="@+id/imageButton5"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -97,7 +92,6 @@
 
         <ImageButton
             android:id="@+id/imageButton6"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -109,7 +103,7 @@
 
         <ImageButton
             android:id="@+id/imageButton7"
-            android:contentDescription="@string/card"
+
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -121,7 +115,6 @@
 
         <ImageButton
             android:id="@+id/imageButton8"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -133,7 +126,6 @@
 
         <ImageButton
             android:id="@+id/imageButton9"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -145,7 +137,6 @@
 
         <ImageButton
             android:id="@+id/imageButton10"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -157,7 +148,6 @@
 
         <ImageButton
             android:id="@+id/imageButton11"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
@@ -169,7 +159,6 @@
 
         <ImageButton
             android:id="@+id/imageButton12"
-            android:contentDescription="@string/card"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:background="@drawable/color_icon"
