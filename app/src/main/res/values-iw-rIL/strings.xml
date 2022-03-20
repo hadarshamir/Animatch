@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Animatch</string>
+    <string name="instructions">התאימו את זוגות החיות</string>
+    <string name="reset">איפוס</string>
+    <string name="music">מנגינה</string>
+    <string name="pairs_found">זוגות שנמצאו</string>
+    <string name="victory">מצאתם את כולם!</string>
+    <string name="halfway">אמצע הדרך...</string>
+    <string name="steps">צעדים</string>
+    <string name="unmute">ביטול השתקה</string>
+</resources>
