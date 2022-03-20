@@ -6,7 +6,8 @@
     <string name="music">מנגינה</string>
     <string name="pairs_found">זוגות שנמצאו</string>
     <string name="victory">מצאתם את כולם!</string>
-    <string name="halfway">אמצע הדרך...</string>
+    <string name="halfway">אמצע הדרך…</string>
     <string name="steps">צעדים</string>
     <string name="unmute">ביטול השתקה</string>
+    <string name="card">קלף</string>
 </resources>
