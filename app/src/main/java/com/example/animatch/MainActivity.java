@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     private int                 stepsCount      = 0;
     private boolean             shouldMute      = true;
     private boolean             emptyIcon       = true;
+    private int                 rotateDirection = 1;
 
     private LinearLayout        colorIcons;
     private ImageButton         colorIcon;
@@ -195,7 +196,7 @@ public class MainActivity extends AppCompatActivity
             {
                 continue;
             }
-            if (btn.getTag().equals(buttons[i].getTag()) && pressedArray[i])
+            if (btn.getTag().equals(buttons[i].getTag()) && pressedArray[i]) // Found a match
             {
                 success.start();
                 matchCount++;
@@ -204,6 +205,11 @@ public class MainActivity extends AppCompatActivity
                 pressedArray[index] = false;
                 btn.setClickable(false);
                 buttons[i].setClickable(false);
+                btn.setRotation(0);
+                btn.animate().rotation(rotateDirection * 360).setDuration(500);
+                buttons[i].setRotation(0);
+                buttons[i].animate().rotation(rotateDirection * 360).setDuration(500);
+
                 break;
             }
         }
@@ -215,6 +221,11 @@ public class MainActivity extends AppCompatActivity
         else if (matchCount == 6) // Finished
         {
             title.setText(getResources().getString(R.string.victory));
+            for (int i = 0; i < animalsArray.length; i++)
+            {
+                buttons[i].setRotation(0);
+                buttons[i].animate().rotation(rotateDirection * 360).setDuration(500);
+            }
         }
     }
 
@@ -294,6 +305,17 @@ public class MainActivity extends AppCompatActivity
     private void reset(List<Integer> animals)
     {
         Collections.shuffle(animals); // Shuffle the animals array
+
+        /* Alternate rotation */
+        if (rotateDirection == 1)
+        {
+            rotateDirection = -1;
+        }
+        else
+        {
+            rotateDirection = 1;
+        }
+
         for (int i = 0; i < animalsArray.length; i++)
         {
             title.setText(getResources().getString(R.string.instructions));
@@ -305,6 +327,11 @@ public class MainActivity extends AppCompatActivity
             buttons[i].setImageResource(R.drawable.hidden);
             buttons[i].setTag(animals.get(i));
             buttons[i].setClickable(true);
+            buttons[i].clearAnimation();
+            buttons[i].setRotation(0);
+            buttons[i].animate().rotation(rotateDirection * 360).setDuration(500);
+            buttons[i].setRotation(0);
+
             pressedArray[i] = false;
             pressedCount = 0;
             matchCount = 0;
