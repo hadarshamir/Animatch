@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity
         /* Reset button logic */
         reset.setOnClickListener(v ->
         {
-            reset(animals);
+            resetGame(animals);
             shuffle.start();
             vib.vibrate(5);
         });
@@ -172,7 +172,7 @@ public class MainActivity extends AppCompatActivity
                 mAccel = mAccel * 0.9f + delta;
                 if (mAccel > 11)
                 {
-                    reset(animals); // Reset on shake
+                    resetGame(animals); // Reset on shake
                     shuffle.start();
                     vib.vibrate(300);
                 }
@@ -306,7 +306,7 @@ public class MainActivity extends AppCompatActivity
         colorIcons.addView(colorIcon, 100, 100);
     }
 
-    private void reset(List<Integer> animals)
+    private void resetGame(List<Integer> animals)
     {
         Collections.shuffle(animals); // Shuffle the animals array
 
