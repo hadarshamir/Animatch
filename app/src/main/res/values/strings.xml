@@ -9,4 +9,23 @@
     <string name="steps">steps</string>
     <string name="unmute">unmute</string>
     <string name="card">card</string>
+    <string name="secrets">secrets</string>
+    <string name="generator">color icon generator</string>
+    <string name="how_many">how many?</string>
+    <string name="which_color">which color?</string>
+    <string name="create">create</string>
+    <string name="random">random</string>
+    <string name="clear">clear</string>
+    <string name="back">back</string>
+    <string name="blue">blue</string>
+    <string name="green">green</string>
+    <string name="grey">grey</string>
+    <string name="pink">pink</string>
+    <string name="red">red</string>
+    <string name="yellow">yellow</string>
+    <string name="crash">let\'s not crash the app... :)</string>
+    <string name="secret_steps_1">you are</string>
+    <string name="secret_steps_2">steps away...</string>
+    <string name="secret_found">you found the secret!</string>
+    <string name="secret_steps_3">step away...</string>
 </resources>

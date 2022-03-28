@@ -10,4 +10,23 @@
     <string name="steps">צעדים</string>
     <string name="unmute">ביטול השתקה</string>
     <string name="card">קלף</string>
+    <string name="secrets">סודות</string>
+    <string name="generator">מחולל אייקונים</string>
+    <string name="how_many">כמה?</string>
+    <string name="which_color">באיזה צבע?</string>
+    <string name="create">יצירה</string>
+    <string name="random">אקראי</string>
+    <string name="clear">ניקוי</string>
+    <string name="back">חזרה</string>
+    <string name="blue">כחול</string>
+    <string name="green">ירוק</string>
+    <string name="grey">אפור</string>
+    <string name="pink">ורוד</string>
+    <string name="red">אדום</string>
+    <string name="yellow">צהוב</string>
+    <string name="crash">בואו לא נקריס את האפליקציה... :)</string>
+    <string name="secret_steps_1">אתם במרחק</string>
+    <string name="secret_steps_2">צעדים...</string>
+    <string name="secret_found">מצאתם את הסוד!</string>
+    <string name="secret_steps_3">צעדים...</string>
 </resources>

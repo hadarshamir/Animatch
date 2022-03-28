@@ -186,8 +186,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
             android:text="@string/pairs_found"
-            android:textColor="#e0e0e0">
-        </TextView>
+            android:textColor="#e0e0e0"></TextView>
 
         <LinearLayout
             android:id="@+id/colorMatchLayout"
@@ -231,7 +230,8 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:backgroundTint="#212121"
-            android:clickable="false"
+            android:background="@android:color/transparent"
+            android:clickable="true"
             android:fontFamily="@font/roboto"
             android:text="@string/steps"
             android:textAllCaps="false"
