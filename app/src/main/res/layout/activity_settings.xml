@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#212121"
-    android:keepScreenOn="true"
-    tools:context=".SettingsActivity"
     android:clickable="true"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:keepScreenOn="true"
+    tools:context=".SettingsActivity">
 
     <TextView
         android:id="@+id/settings"
@@ -22,38 +22,42 @@
         android:textColor="#e0e0e0"
         android:textSize="25sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/createColorObjects"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/settingsLayout"/>
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/createColorObjects"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/roboto"
+        android:includeFontPadding="true"
+        android:text="@string/generator"
+        android:textColor="#e0e0e0"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/settingsLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings" />
 
     <LinearLayout
         android:id="@+id/settingsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/settings"
-        app:layout_constraintBottom_toTopOf="@id/scrollView"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@id/initializeObjects"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:id="@+id/createColorObjects"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto"
-            android:includeFontPadding="true"
-            android:text="@string/generator"
-            android:textStyle="bold"
-            android:textColor="#e0e0e0"
-            android:textSize="16sp"/>
+        app:layout_constraintTop_toBottomOf="@id/createColorObjects">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -62,26 +66,32 @@
                 android:includeFontPadding="true"
                 android:text="@string/how_many"
                 android:textColor="#e0e0e0"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content" />
 
             <EditText
                 android:id="@+id/numOfObjects"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#e0e0e0"
+                android:fontFamily="@font/roboto"
                 android:inputType="number"
+                android:maxLength="4"
                 android:textAlignment="center"
                 android:textColor="#e0e0e0"
                 android:textSize="16sp"
-                android:fontFamily="@font/roboto"/>
+                tools:ignore="Autofill,LabelFor,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_gravity="center"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,7 +99,7 @@
                 android:fontFamily="@font/roboto"
                 android:text="@string/which_color"
                 android:textColor="#e0e0e0"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <Spinner
                 android:id="@+id/colorOfObjects"
@@ -97,100 +107,90 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#e0e0e0"
                 android:entries="@array/color_names"
-                android:gravity="end">
-            </Spinner>
+                android:gravity="end"
+                tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
     </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="wrap_content"
-        android:layout_height="400dp"
-        app:layout_constraintBottom_toTopOf="@+id/initializeObjects"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settingsLayout"
-        app:layout_constrainedHeight="true"
-        app:layout_constraintHeight_max="400dp"
-        android:requiresFadingEdge="vertical"
-        android:fadingEdgeLength="100dp"
-        android:fadeScrollbars="true"
-        android:scrollbars="none">
-
-        <GridLayout
-            android:id="@+id/colorIconsGrid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:columnCount="6"></GridLayout>
-    </ScrollView>
 
     <LinearLayout
         android:id="@+id/initializeObjects"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/scrollView"
-        app:layout_constraintBottom_toTopOf="@id/back">
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/scrollView"
+        app:layout_constraintTop_toBottomOf="@id/settingsLayout">
 
         <Button
             android:id="@+id/create"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#212121"
             android:background="@android:color/transparent"
+            android:backgroundTint="#212121"
             android:fontFamily="@font/roboto"
             android:text="@string/create"
             android:textAllCaps="false"
             android:textColor="#e0e0e0"
-            android:textSize="16sp">
-        </Button>
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/random"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#212121"
             android:background="@android:color/transparent"
+            android:backgroundTint="#212121"
             android:fontFamily="@font/roboto"
             android:text="@string/random"
             android:textAllCaps="false"
             android:textColor="#e0e0e0"
-            android:textSize="16sp">
-        </Button>
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/clear"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#212121"
             android:background="@android:color/transparent"
+            android:backgroundTint="#212121"
             android:fontFamily="@font/roboto"
             android:text="@string/clear"
             android:textAllCaps="false"
             android:textColor="#e0e0e0"
-            android:textSize="16sp">
-        </Button>
+            android:textSize="16sp" />
     </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="wrap_content"
+        android:layout_height="400dp"
+        android:fadeScrollbars="true"
+        android:fadingEdgeLength="100dp"
+        android:requiresFadingEdge="vertical"
+        android:scrollbars="none"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="400dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/initializeObjects" />
 
     <Button
         android:id="@+id/back"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#212121"
         android:background="@android:color/transparent"
+        android:backgroundTint="#212121"
         android:fontFamily="@font/roboto"
         android:text="@string/back"
         android:textAllCaps="false"
         android:textColor="#e0e0e0"
         android:textSize="25sp"
-        app:layout_constraintTop_toBottomOf="@id/initializeObjects"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></Button>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

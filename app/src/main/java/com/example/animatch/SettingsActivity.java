@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -11,6 +12,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -26,26 +29,22 @@ import java.util.Random;
 
 public class SettingsActivity extends AppCompatActivity
 {
-    private final String[]      colorsArray = { "blue", "green", "grey", "pink", "red", "yellow" };
+    private final String[]      colorsArray     = { "blue", "green", "grey", "pink", "red", "yellow" };
     private EditText            numOfObjects;
     private Spinner             colorPicker;
     private GridLayout          colorIconsGrid;
     private ImageButton         colorIcon;
-    private Button              create, random, clear, back;
 
-    private ConstraintLayout    secretsLayout;
-
-    private boolean             isEmptyButton = true;
+    private boolean             isEmptyButton   = true;
+    private int                 colorIconCount  = 0;
 
     private MediaPlayer         bgm, flip, shuffle;
-
-    private SensorManager       mSensorManager;
-    private SensorEventListener mSensorListener;
 
     private float               mAccel;
     private float               mAccelCurrent;
     private float               mAccelLast;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -53,10 +52,14 @@ public class SettingsActivity extends AppCompatActivity
         setContentView(R.layout.activity_settings);
 
         Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        VibrationEffect vibrationEffectShort = VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE);
+        VibrationEffect vibrationEffectLong = VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE);
+        
 
         bgm     = MediaPlayer.create(SettingsActivity.this, R.raw.settings_bgm);
         flip    = MediaPlayer.create(SettingsActivity.this, R.raw.flip);
         shuffle = MediaPlayer.create(SettingsActivity.this, R.raw.shuffle);
+        bgm.setLooping(true);
         bgm.start();
 
         /* Hide action bar */
@@ -64,54 +67,61 @@ public class SettingsActivity extends AppCompatActivity
         assert actionBar != null;
         actionBar.hide();
 
-        secretsLayout = findViewById(R.id.secretsLayout);
-        secretsLayout.setOnClickListener(v ->
-        {
-            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        });
-
         numOfObjects = findViewById(R.id.numOfObjects);
         numOfObjects.setText("1");
 
-        colorIconsGrid  = findViewById(R.id.colorIconsGrid);
+        ConstraintLayout secretsLayout = findViewById(R.id.secretsLayout);
+        secretsLayout.setOnTouchListener((v, event) ->
+        {
+            hideKeyboardAndClearFocus();
+            return true;
+        });
+
+        colorIconsGrid = new GridLayout(this);
+        colorIconsGrid.setId(R.id.colorIconsGrid);
+        colorIconsGrid.setColumnCount(6);
         setEmptyIcon();
+
+        ScrollView scrollView = findViewById(R.id.scrollView);
+        scrollView.addView(colorIconsGrid);
 
         colorPicker = findViewById(R.id.colorOfObjects);
         colorPicker.setSelection(0);
 
-        create = findViewById(R.id.create);
+        Button create = findViewById(R.id.create);
         create.setOnClickListener(v ->
         {
             flip.start();
             addColorIconsByNumberAndColor(Integer.parseInt(numOfObjects.getText().toString()), false);
-            vib.vibrate(5);
+            vib.vibrate(vibrationEffectShort);
         });
 
-        random = findViewById(R.id.random);
+        Button random = findViewById(R.id.random);
         random.setOnClickListener(v ->
         {
             flip.start();
             addColorIconsByNumberAndColor(Integer.parseInt(numOfObjects.getText().toString()), true);
-            vib.vibrate(5);
+            vib.vibrate(vibrationEffectShort);
         });
 
-        clear = findViewById(R.id.clear);
+        Button clear = findViewById(R.id.clear);
         clear.setOnClickListener(v ->
         {
             resetIcons();
-            vib.vibrate(5);
+            hideKeyboardAndClearFocus();
+            vib.vibrate(vibrationEffectShort);
         });
 
-        back = findViewById(R.id.back);
+        Button back = findViewById(R.id.back);
         back.setOnClickListener(v ->
         {
             onBackPressed();
-            vib.vibrate(5);
+            vib.vibrate(vibrationEffectShort);
         });
 
         /* Accelerometer logic */
-        mSensorListener = new SensorEventListener()
+        // Reset on shake
+        SensorEventListener mSensorListener = new SensorEventListener()
         {
             @Override
             public void onSensorChanged(SensorEvent event)
@@ -126,7 +136,7 @@ public class SettingsActivity extends AppCompatActivity
                 if (mAccel > 11)
                 {
                     resetIcons(); // Reset on shake
-                    vib.vibrate(300);
+                    vib.vibrate(vibrationEffectLong);
                 }
             }
 
@@ -135,7 +145,7 @@ public class SettingsActivity extends AppCompatActivity
             {
             }
         };
-        mSensorManager  = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        SensorManager mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Objects.requireNonNull(mSensorManager).registerListener(mSensorListener,
                 mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
@@ -146,18 +156,23 @@ public class SettingsActivity extends AppCompatActivity
 
     private void addColorIconsByNumberAndColor(int numOfColorIcons, boolean isRandom)
     {
+        hideKeyboardAndClearFocus();
+
+        colorIconCount += numOfColorIcons;
+        if (colorIconCount > 25000)
+        {
+            resetIcons();
+            colorIconCount = 0;
+            Toast.makeText(getApplicationContext(), R.string.crash, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (numOfColorIcons > 9999)
         {
             Toast.makeText(getApplicationContext(), R.string.crash, Toast.LENGTH_SHORT).show();
             return;
         }
         String chosenColor = colorPicker.getSelectedItem().toString();
-
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        if (imm.isAcceptingText())
-        {
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
 
         if (isEmptyButton)
         {
@@ -220,6 +235,16 @@ public class SettingsActivity extends AppCompatActivity
         colorIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         colorIconsGrid.addView(colorIcon, 100, 100);
         isEmptyButton = true;
+    }
+
+    private void hideKeyboardAndClearFocus()
+    {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        if (numOfObjects.isFocused())
+        {
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        numOfObjects.clearFocus();
     }
 
     @Override

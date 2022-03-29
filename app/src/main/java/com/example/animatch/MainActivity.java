@@ -9,7 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.WindowManager;
@@ -52,9 +52,7 @@ public class MainActivity extends AppCompatActivity
     private LinearLayout        colorIcons;
     private ImageButton         colorIcon;
     private TextView            title;
-    private Button              reset;
-    private Button              steps;
-    private Button              mute;
+    private Button              reset, steps, mute;
 
     private MediaPlayer         bgm, flip, success, shuffle, victory;
     private SensorManager       mSensorManager;
@@ -76,6 +74,8 @@ public class MainActivity extends AppCompatActivity
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        VibrationEffect vibrationEffectShort = VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE);
+        VibrationEffect vibrationEffectLong = VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE);
 
         /* Hide action bar */
         ActionBar actionBar = getSupportActionBar();
@@ -154,7 +154,18 @@ public class MainActivity extends AppCompatActivity
         reset.setOnClickListener(v ->
         {
             resetGame(animals);
-            vib.vibrate(5);
+            vib.vibrate(vibrationEffectShort);
+        });
+
+        reset.setOnLongClickListener(v ->
+        {
+            if (secretsEnabled)
+            {
+                steps.setText(R.string.steps);
+                secretsEnabled = false;
+                secretsCount = 4;
+            }
+            return true;
         });
 
         /* Settings button logic */
@@ -165,7 +176,7 @@ public class MainActivity extends AppCompatActivity
                 toast.cancel();
             }
             goToSettings = new Intent(MainActivity.this, SettingsActivity.class);
-            vib.vibrate(5);
+            vib.vibrate(vibrationEffectShort);
             if (secretsCount == 1)
             {
                 secretsEnabled = true;
@@ -201,7 +212,7 @@ public class MainActivity extends AppCompatActivity
         {
             mute(mute, shouldMute);
             shouldMute = !shouldMute;
-            vib.vibrate(5);
+            vib.vibrate(vibrationEffectShort);
         });
 
         /* Accelerometer logic */
@@ -220,7 +231,7 @@ public class MainActivity extends AppCompatActivity
                 if (mAccel > 11)
                 {
                     resetGame(animals); // Reset on shake
-                    vib.vibrate(300);
+                    vib.vibrate(vibrationEffectLong);
                 }
             }
             @Override
