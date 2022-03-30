@@ -1,9 +1,5 @@
 package com.example.animatch;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -24,6 +20,10 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import java.util.Objects;
 import java.util.Random;
 
@@ -32,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity
     private final String[]      colorsArray     = { "blue", "green", "grey", "pink", "red", "yellow" };
     private EditText            numOfObjects;
     private Spinner             colorPicker;
+    private ScrollView          scrollView;
     private GridLayout          colorIconsGrid;
     private ImageButton         colorIcon;
 
@@ -53,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity
 
         Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         VibrationEffect vibrationEffectShort = VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE);
-        VibrationEffect vibrationEffectLong = VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE);
+        VibrationEffect vibrationEffectLong  = VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE);
         
 
         bgm     = MediaPlayer.create(SettingsActivity.this, R.raw.settings_bgm);
@@ -82,7 +83,7 @@ public class SettingsActivity extends AppCompatActivity
         colorIconsGrid.setColumnCount(6);
         setEmptyIcon();
 
-        ScrollView scrollView = findViewById(R.id.scrollView);
+        scrollView = findViewById(R.id.scrollView);
         scrollView.addView(colorIconsGrid);
 
         colorPicker = findViewById(R.id.colorOfObjects);
@@ -91,7 +92,6 @@ public class SettingsActivity extends AppCompatActivity
         Button create = findViewById(R.id.create);
         create.setOnClickListener(v ->
         {
-            flip.start();
             addColorIconsByNumberAndColor(Integer.parseInt(numOfObjects.getText().toString()), false);
             vib.vibrate(vibrationEffectShort);
         });
@@ -99,7 +99,6 @@ public class SettingsActivity extends AppCompatActivity
         Button random = findViewById(R.id.random);
         random.setOnClickListener(v ->
         {
-            flip.start();
             addColorIconsByNumberAndColor(Integer.parseInt(numOfObjects.getText().toString()), true);
             vib.vibrate(vibrationEffectShort);
         });
@@ -150,13 +149,14 @@ public class SettingsActivity extends AppCompatActivity
                 mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
         mAccel = 10f;
-        mAccelCurrent   = SensorManager.GRAVITY_EARTH;
-        mAccelLast      = SensorManager.GRAVITY_EARTH;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast    = SensorManager.GRAVITY_EARTH;
     }
 
     private void addColorIconsByNumberAndColor(int numOfColorIcons, boolean isRandom)
     {
         hideKeyboardAndClearFocus();
+        flip.start();
 
         colorIconCount += numOfColorIcons;
         if (colorIconCount > 25000)
@@ -215,6 +215,7 @@ public class SettingsActivity extends AppCompatActivity
             colorIcon.setBackgroundColor(212121);
             colorIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
             colorIconsGrid.addView(colorIcon, 100, 100);
+            scrollView.post(() -> scrollView.fullScroll(ScrollView.FOCUS_DOWN));
         }
     }
 
