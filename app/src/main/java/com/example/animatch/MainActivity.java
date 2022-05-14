@@ -1,6 +1,7 @@
 package com.example.animatch;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -8,6 +9,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.WindowManager;
@@ -16,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,10 +32,10 @@ public class MainActivity extends AppCompatActivity
 {
     /* Declarations */
     private ImageButton[]       buttons         = null;
-    private final int[]         animalsArray    = { R.drawable.dog, R.drawable.gorilla, R.drawable.lion,
-                                                    R.drawable.monkey, R.drawable.mouse, R.drawable.rabbit,
-                                                    R.drawable.dog, R.drawable.gorilla, R.drawable.lion,
-                                                    R.drawable.monkey, R.drawable.mouse, R.drawable.rabbit };
+    private final int[]         animalsArray    = { R.drawable.dog,     R.drawable.gorilla, R.drawable.lion,
+                                                    R.drawable.monkey,  R.drawable.mouse,   R.drawable.rabbit,
+                                                    R.drawable.dog,     R.drawable.gorilla, R.drawable.lion,
+                                                    R.drawable.monkey,  R.drawable.mouse,   R.drawable.rabbit };
     private final boolean[]     pressedArray    = { false, false, false,
                                                     false, false, false,
                                                     false, false, false,
@@ -43,13 +46,13 @@ public class MainActivity extends AppCompatActivity
     private boolean             shouldMute      = true;
     private boolean             emptyIcon       = true;
     private int                 rotateDirection = 1;
+    private int                 secretsCount    = 4;
+    private boolean             secretsEnabled  = false;
 
     private LinearLayout        colorIcons;
     private ImageButton         colorIcon;
     private TextView            title;
-    private Button              reset;
-    private Button              steps;
-    private Button              mute;
+    private Button              reset, steps, mute;
 
     private MediaPlayer         bgm, flip, success, shuffle, victory;
     private SensorManager       mSensorManager;
@@ -59,6 +62,10 @@ public class MainActivity extends AppCompatActivity
     private float               mAccelCurrent;
     private float               mAccelLast;
 
+    private Intent              goToSettings;
+
+    private Toast               toast;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -67,6 +74,8 @@ public class MainActivity extends AppCompatActivity
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        VibrationEffect vibrationEffectShort = VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE);
+        VibrationEffect vibrationEffectLong = VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE);
 
         /* Hide action bar */
         ActionBar actionBar = getSupportActionBar();
@@ -94,10 +103,10 @@ public class MainActivity extends AppCompatActivity
 
         /* Init buttons array */
         buttons = new ImageButton[] {
-                findViewById(R.id.imageButton1), findViewById(R.id.imageButton2), findViewById(R.id.imageButton3),
-                findViewById(R.id.imageButton4), findViewById(R.id.imageButton5), findViewById(R.id.imageButton6),
-                findViewById(R.id.imageButton7), findViewById(R.id.imageButton8), findViewById(R.id.imageButton9),
-                findViewById(R.id.imageButton10),findViewById(R.id.imageButton11),findViewById(R.id.imageButton12)
+                findViewById(R.id.imageButton1),  findViewById(R.id.imageButton2),  findViewById(R.id.imageButton3),
+                findViewById(R.id.imageButton4),  findViewById(R.id.imageButton5),  findViewById(R.id.imageButton6),
+                findViewById(R.id.imageButton7),  findViewById(R.id.imageButton8),  findViewById(R.id.imageButton9),
+                findViewById(R.id.imageButton10), findViewById(R.id.imageButton11), findViewById(R.id.imageButton12)
         };
 
         /* Init animals array as list */
@@ -145,8 +154,57 @@ public class MainActivity extends AppCompatActivity
         reset.setOnClickListener(v ->
         {
             resetGame(animals);
-            shuffle.start();
-            vib.vibrate(5);
+            vib.vibrate(vibrationEffectShort);
+        });
+
+        reset.setOnLongClickListener(v ->
+        {
+            if (secretsEnabled)
+            {
+                steps.setText(R.string.steps);
+                secretsEnabled = false;
+                secretsCount = 4;
+            }
+            return true;
+        });
+
+        /* Settings button logic */
+        steps.setOnClickListener(v ->
+        {
+            if (toast != null)
+            {
+                toast.cancel();
+            }
+            goToSettings = new Intent(MainActivity.this, SettingsActivity.class);
+            vib.vibrate(vibrationEffectShort);
+            if (secretsCount == 1)
+            {
+                secretsEnabled = true;
+                steps.setText(R.string.secrets);
+                toast = Toast.makeText(getApplicationContext(), getString(R.string.secret_found), Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            if (secretsCount == 0)
+            {
+                startActivity(goToSettings);
+            }
+            else
+            {
+                if (--secretsCount == 1)
+                {
+                    toast = Toast.makeText(getApplicationContext(),
+                            getString(R.string.secret_steps_1) + " " + secretsCount + " " + getString(R.string.secret_steps_3),
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+                else if (secretsCount > 0)
+                {
+                    toast = Toast.makeText(getApplicationContext(),
+                            getString(R.string.secret_steps_1) + " " + secretsCount + " " + getString(R.string.secret_steps_2),
+                            Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
         });
 
         /* Mute button logic */
@@ -154,7 +212,7 @@ public class MainActivity extends AppCompatActivity
         {
             mute(mute, shouldMute);
             shouldMute = !shouldMute;
-            vib.vibrate(5);
+            vib.vibrate(vibrationEffectShort);
         });
 
         /* Accelerometer logic */
@@ -173,20 +231,20 @@ public class MainActivity extends AppCompatActivity
                 if (mAccel > 11)
                 {
                     resetGame(animals); // Reset on shake
-                    shuffle.start();
-                    vib.vibrate(300);
+                    vib.vibrate(vibrationEffectLong);
                 }
             }
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
             }
         };
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        Objects.requireNonNull(mSensorManager).registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL);
-        mAccel = 10f;
-        mAccelCurrent = SensorManager.GRAVITY_EARTH;
-        mAccelLast = SensorManager.GRAVITY_EARTH;
+        mSensorManager  = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Objects.requireNonNull(mSensorManager).registerListener(mSensorListener,
+                                                                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                                                                SensorManager.SENSOR_DELAY_NORMAL);
+        mAccel          = 10f;
+        mAccelCurrent   = SensorManager.GRAVITY_EARTH;
+        mAccelLast      = SensorManager.GRAVITY_EARTH;
     }
 
     private void checkMatch(ImageButton btn, int index)
@@ -204,7 +262,7 @@ public class MainActivity extends AppCompatActivity
                     success.start();
                 }
                 addColorIcon(btn);
-                pressedArray[i] = false;
+                pressedArray[i]     = false;
                 pressedArray[index] = false;
                 btn.setClickable(false);
                 buttons[i].setClickable(false);
@@ -308,6 +366,7 @@ public class MainActivity extends AppCompatActivity
 
     private void resetGame(List<Integer> animals)
     {
+        shuffle.start();
         Collections.shuffle(animals); // Shuffle the animals array
 
         /* Alternate rotation */
@@ -323,10 +382,17 @@ public class MainActivity extends AppCompatActivity
         for (int i = 0; i < animalsArray.length; i++)
         {
             title.setText(getResources().getString(R.string.instructions));
-            steps.setText(R.string.steps);
-            stepsCount = 0;
+            if (secretsEnabled)
+            {
+                steps.setText(R.string.secrets);
+            }
+            else
+            {
+                steps.setText(R.string.steps);
+            }
+            stepsCount      = 0;
+            emptyIcon       = true;
             setEmptyIcon();
-            emptyIcon = true;
 
             buttons[i].setImageResource(R.drawable.hidden);
             buttons[i].setTag(animals.get(i));
@@ -337,8 +403,8 @@ public class MainActivity extends AppCompatActivity
             buttons[i].setRotation(0);
 
             pressedArray[i] = false;
-            pressedCount = 0;
-            matchCount = 0;
+            pressedCount    = 0;
+            matchCount      = 0;
         }
     }
 
