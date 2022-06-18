@@ -26,4 +26,12 @@
     <string name="secret_steps_2">steps away…</string>
     <string name="secret_found">you found the secret!</string>
     <string name="secret_steps_3">step away…</string>
+    <string name="main_menu_title">animatch</string>
+    <string name="continueButton">continue</string>
+    <string name="new_game">new game</string>
+    <string name="settings">settings</string>
+    <string name="high_score">high score</string>
+    <string name="easy">easy</string>
+    <string name="medium">medium</string>
+    <string name="hard">hard</string>
 </resources>

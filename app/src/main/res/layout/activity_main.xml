@@ -5,262 +5,227 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#212121"
-    android:keepScreenOn="true"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:includeFontPadding="true"
-        android:text="@string/instructions"
-        android:textColor="#e0e0e0"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/grid"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <GridLayout
-        android:id="@+id/grid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:rowCount="4"
-        app:layout_constraintBottom_toTopOf="@id/midLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title">
-
-
-        <ImageButton
-            android:id="@+id/imageButton1"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton4"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton5"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton6"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton7"
-
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton8"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton9"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton10"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton11"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-
-        <ImageButton
-            android:id="@+id/imageButton12"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:adjustViewBounds="false"
-            android:background="@drawable/color_icon"
-            android:backgroundTint="#212121"
-            android:padding="10dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/hidden"
-            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
-    </GridLayout>
-
     <LinearLayout
-        android:id="@+id/midLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@id/bottomLayout"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/grid">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/imageButtonMainMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:adjustViewBounds="false"
+            android:background="@drawable/color_icon"
+            android:backgroundTint="#212121"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/hidden"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
         <TextView
+            android:id="@+id/mainMenuTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/roboto"
-            android:text="@string/pairs_found"
-            android:textColor="#e0e0e0" />
+            android:includeFontPadding="true"
+            android:text="@string/main_menu_title"
+            android:textColor="#e0e0e0"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/grid"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/colorMatchLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:layout_margin="50dp">
 
-    <LinearLayout
-        android:id="@+id/bottomLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/midLayout">
+            <Button
+                android:id="@+id/continueButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:backgroundTint="#212121"
+                android:fontFamily="@font/roboto"
+                android:text="@string/continueButton"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#e0e0e0"
+                android:textSize="25sp" />
 
-        <Button
-            android:id="@+id/reset"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="0dp"
+            <Button
+                android:id="@+id/newGameButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:backgroundTint="#212121"
+                android:fontFamily="@font/roboto"
+                android:text="@string/new_game"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#e0e0e0"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/settingsButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:backgroundTint="#212121"
+                android:fontFamily="@font/roboto"
+                android:text="@string/settings"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#e0e0e0"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/highScore"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:backgroundTint="#212121"
             android:fontFamily="@font/roboto"
-            android:text="@string/reset"
-            android:textAlignment="textEnd"
-            android:textAllCaps="false"
+            android:includeFontPadding="true"
+            android:text="@string/high_score"
             android:textColor="#e0e0e0"
-            android:textSize="25sp" />
-
-        <Button
-            android:id="@+id/steps"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="0dp"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@id/grid"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:backgroundTint="#212121"
-            android:clickable="true"
-            android:fontFamily="@font/roboto"
-            android:text="@string/steps"
-            android:textAllCaps="false"
-            android:textColor="#e0e0e0"
-            android:textSize="25sp" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/mute"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:backgroundTint="#212121"
-            android:fontFamily="@font/roboto"
-            android:text="@string/music"
-            android:textAlignment="textStart"
-            android:textAllCaps="false"
-            android:textColor="#e0e0e0"
-            android:textSize="25sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="15dp">
+
+                <TextView
+                    android:id="@+id/highScoreEasy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:includeFontPadding="true"
+                    android:text="@string/easy"
+                    android:textColor="#e0e0e0"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/grid"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textAlignment="textStart"/>
+
+                <TextView
+                    android:id="@+id/highScoreMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:includeFontPadding="true"
+                    android:text="@string/medium"
+                    android:textColor="#e0e0e0"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/grid"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textAlignment="textStart"/>
+
+                <TextView
+                    android:id="@+id/highScoreHard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:includeFontPadding="true"
+                    android:text="@string/hard"
+                    android:textAlignment="textStart"
+                    android:textColor="#e0e0e0"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/grid"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="15dp">
+
+                <TextView
+                    android:id="@+id/highScoreEasyValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:includeFontPadding="true"
+                    android:text="15"
+                    android:textColor="#e0e0e0"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/grid"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textAlignment="textEnd"/>
+
+                <TextView
+                    android:id="@+id/highScoreMediumValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:includeFontPadding="true"
+                    android:text="28"
+                    android:textColor="#e0e0e0"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/grid"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textAlignment="textEnd"/>
+
+                <TextView
+                    android:id="@+id/highScoreHardValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto"
+                    android:includeFontPadding="true"
+                    android:text="42"
+                    android:textColor="#e0e0e0"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/grid"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textAlignment="textEnd"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,4 +27,12 @@
     <string name="secret_steps_2">צעדים…</string>
     <string name="secret_found">מצאתם את הסוד!</string>
     <string name="secret_steps_3">צעדים…</string>
+    <string name="main_menu_title">animatch</string>
+    <string name="continueButton">המשך</string>
+    <string name="new_game">משחק חדש</string>
+    <string name="settings">הגדרות</string>
+    <string name="high_score">שיאים</string>
+    <string name="easy">קל</string>
+    <string name="medium">בינוני</string>
+    <string name="hard">קשה</string>
 </resources>
