@@ -35,4 +35,9 @@
     <string name="easy">קל</string>
     <string name="medium">בינוני</string>
     <string name="hard">קשה</string>
+    <string name="board_size_title">בחרו את גודל הלוח</string>
+    <string name="dark_blue">כחול כהה</string>
+    <string name="dark_green">ירוק כהה</string>
+    <string name="light_grey">אפור בהיר</string>
+    <string name="brown">חום</string>
 </resources>

@@ -7,64 +7,45 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.util.Log;
-import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class GameActivity extends AppCompatActivity
+public class GameActivity extends NewGameActivity
 {
     /* Declarations */
-    private ImageButton[]       buttons         = null;
-    public final int[]          animalsArray    = { R.drawable.dog,     R.drawable.gorilla, R.drawable.lion,
-                                                    R.drawable.monkey,  R.drawable.mouse,   R.drawable.rabbit,
-                                                    R.drawable.dog,     R.drawable.gorilla, R.drawable.lion,
-                                                    R.drawable.monkey,  R.drawable.mouse,   R.drawable.rabbit };
-    private final boolean[]     pressedArray    = { false, false, false,
-                                                    false, false, false,
-                                                    false, false, false,
-                                                    false, false, false };
-    private int                 pressedCount    = 0;
-    private int                 matchCount      = 0;
-    private int                 stepsCount      = 0;
-    private boolean             shouldMute      = true;
-    private boolean             emptyIcon       = true;
-    private int                 rotateDirection = 1;
-    private int                 secretsCount    = 4;
-    private boolean             secretsEnabled  = false;
+    private ImageButton[]       buttons             = null;
+    private final boolean[]     pressedArray        = { false, false, false, false,
+                                                        false, false, false, false,
+                                                        false, false, false, false,
+                                                        false, false, false, false,
+                                                        false, false, false, false };
+    private int                 pressedCount        = 0;
+    private int                 matchCount          = 0;
+    private int                 stepsCount          = 0;
+    private boolean             shouldMute          = true;
+    private boolean             emptyIcon           = true;
+    private int                 rotateDirection     = 1;
+    private int                 secretsCount        = 4;
+    private boolean             secretsEnabled      = false;
 
     private LinearLayout        colorIcons;
     private ImageButton         colorIcon;
     private TextView            title;
-    private Button              reset, steps, mute;
-
-    private MediaPlayer         bgm, flip, success, shuffle, victory;
-    private SensorManager       mSensorManager;
-    private SensorEventListener mSensorListener;
-
-    private float               mAccel;
-    private float               mAccelCurrent;
-    private float               mAccelLast;
+    private Button              steps, mute;
 
     private Intent              goToSettings;
-
-    private Toast               toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -72,45 +53,54 @@ public class GameActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        Vibrator vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        VibrationEffect vibrationEffectShort = VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE);
-        VibrationEffect vibrationEffectLong = VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE);
-
-        /* Hide action bar */
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.hide();
-
-        /* Init audio */
-        bgm     = MediaPlayer.create(GameActivity.this, R.raw.bgm);
-        flip    = MediaPlayer.create(GameActivity.this, R.raw.flip);
-        success = MediaPlayer.create(GameActivity.this, R.raw.success);
-        shuffle = MediaPlayer.create(GameActivity.this, R.raw.shuffle);
-        victory = MediaPlayer.create(GameActivity.this, R.raw.victory);
-        bgm.setLooping(true);
-        bgm.setVolume(0.5f, 0.5f);
-        bgm.start();
-
         /* Init views and buttons */
-        title       = findViewById(R.id.title);
-        colorIcons  = findViewById(R.id.colorMatchLayout);
-        reset       = findViewById(R.id.reset);
-        steps       = findViewById(R.id.steps);
-        mute        = findViewById(R.id.mute);
+        title        = findViewById(R.id.title);
+        colorIcons   = findViewById(R.id.colorMatchLayout);
+        Button reset = findViewById(R.id.reset);
+        steps        = findViewById(R.id.steps);
+        mute         = findViewById(R.id.mute);
 
         setEmptyIcon(); // Set the empty space between the color icons and the controls
 
         /* Init buttons array */
-        buttons = new ImageButton[] {
-                findViewById(R.id.imageButton1),  findViewById(R.id.imageButton2),  findViewById(R.id.imageButton3),
-                findViewById(R.id.imageButton4),  findViewById(R.id.imageButton5),  findViewById(R.id.imageButton6),
-                findViewById(R.id.imageButton7),  findViewById(R.id.imageButton8),  findViewById(R.id.imageButton9),
-                findViewById(R.id.imageButton10), findViewById(R.id.imageButton11), findViewById(R.id.imageButton12)
-        };
+        buttons = new ImageButton[20];
 
         /* Init animals array as list */
         List<Integer> animals = new ArrayList<>();
+
+        GridLayout gridLayout = findViewById(R.id.grid);
+        gridLayout.removeAllViews();
+
+        String difficulty = getIntent().getStringExtra("difficulty");
+        switch (difficulty)
+        {
+            case "easy":
+            {
+                animalsArray = animalsArrayEasy;
+                gridLayout.setColumnCount(2);
+                gridLayout.setRowCount(3);
+                resizeGrid(gridLayout, 450, 450);
+            }
+            break;
+
+            case "medium":
+            {
+                animalsArray = animalsArrayMedium;
+                gridLayout.setColumnCount(3);
+                gridLayout.setRowCount(4);
+                resizeGrid(gridLayout, 350, 350);
+            }
+            break;
+
+            case "hard":
+            {
+                animalsArray = animalsArrayHard;
+                gridLayout.setColumnCount(4);
+                gridLayout.setRowCount(5);
+                resizeGrid(gridLayout, 250, 250);
+            }
+            break;
+        }
         for (int j : animalsArray)
         {
             animals.add(j);
@@ -119,21 +109,22 @@ public class GameActivity extends AppCompatActivity
         /* Log tags for debug purposes (they change whenever a new drawable is added) */
         for (int i = 0; i < animalsArray.length; i++)
         {
+            Log.d("stags: ", getResources().getResourceName(animals.get(i)));
             Log.d("tags: ", animals.get(i) + ", ");
         }
 
-        /* Shuffle animals array before buttons init */
+        /* Shuffle animals array */
         Collections.shuffle(animals);
 
         /* Card button logic */
         for (int index = 0; index < animalsArray.length; index++)
         {
             final int i = index;
-            buttons[i].setTag(animals.get(i));
             buttons[i].setOnClickListener(v ->
             {
                 flip.start(); // Play sound on click
                 buttons[i].setImageResource(pressedArray[i] ? R.drawable.hidden : animals.get(i));
+                buttons[i].setTag(getResources().getResourceName(animals.get(i)));
                 if (pressedArray[i]) // Face up
                 {
                     pressedCount--;
@@ -146,7 +137,7 @@ public class GameActivity extends AppCompatActivity
                 pressedArray[i] = !pressedArray[i];
 
                 checkState(i); // Make sure only two cards are face up at a time
-                checkMatch(buttons[i], i); // Check for a match
+                checkMatch(buttons[i], i, difficulty); // Check for a match
             });
         }
 
@@ -247,8 +238,34 @@ public class GameActivity extends AppCompatActivity
         mAccelLast      = SensorManager.GRAVITY_EARTH;
     }
 
-    private void checkMatch(ImageButton btn, int index)
+    private void resizeGrid(GridLayout gridLayout, int width, int height)
     {
+        for (int i = 0, k = 0; i < gridLayout.getColumnCount(); i++)
+        {
+            for (int j = 0; j < gridLayout.getRowCount(); j++)
+            {
+                ImageButton card = new ImageButton(this);
+                card.setBackgroundResource(R.drawable.color_icon);
+                card.setImageResource(R.drawable.hidden);
+                card.setBackgroundColor(212121);
+                card.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+                GridLayout.LayoutParams cardParams = new GridLayout.LayoutParams();
+                cardParams.width = width;
+                cardParams.height = height;
+                card.setLayoutParams(cardParams);
+
+                gridLayout.addView(card);
+
+                buttons[k++] = card;
+            }
+        }
+    }
+
+    private void checkMatch(ImageButton btn, int index, String difficultyLevel)
+    {
+        int difficultyMatchCount = 0;
+
         for (int i = 0; i < animalsArray.length; i++)
         {
             if (i == index)
@@ -275,11 +292,31 @@ public class GameActivity extends AppCompatActivity
             }
         }
 
-        if (matchCount == 3) // Halfway
+        switch (difficultyLevel)
+        {
+            case "easy":
+            {
+                difficultyMatchCount = 3;
+            }
+            break;
+
+            case "medium":
+            {
+                difficultyMatchCount = 6;
+            }
+            break;
+
+            case "hard":
+            {
+                difficultyMatchCount = 10;
+            }
+            break;
+        }
+        if (matchCount == difficultyMatchCount / 2) // Halfway
         {
             title.setText(getResources().getString(R.string.halfway));
         }
-        else if (matchCount == 6) // Finished
+        else if (matchCount == difficultyMatchCount) // Finished
         {
             victory.start();
             title.setText(getResources().getString(R.string.victory));
@@ -322,39 +359,63 @@ public class GameActivity extends AppCompatActivity
         colorIcon.setBackgroundResource(R.drawable.color_icon);
         switch (matchedPair.getTag().toString())
         {
-            case "2131230823":
+            case "com.example.animatch:drawable/dog":
             {
                 colorIcon.setImageResource(R.drawable.blue);
             }
             break;
 
-            case "2131230825":
+            case "com.example.animatch:drawable/gorilla":
             {
                 colorIcon.setImageResource(R.drawable.yellow);
             }
             break;
 
-            case "2131230840":
+            case "com.example.animatch:drawable/lion":
             {
                 colorIcon.setImageResource(R.drawable.green);
             }
             break;
 
-            case "2131230859":
+            case "com.example.animatch:drawable/monkey":
             {
                 colorIcon.setImageResource(R.drawable.grey);
             }
             break;
 
-            case "2131230861":
+            case "com.example.animatch:drawable/mouse":
             {
                 colorIcon.setImageResource(R.drawable.red);
             }
             break;
 
-            case "2131230886":
+            case "com.example.animatch:drawable/rabbit":
             {
                 colorIcon.setImageResource(R.drawable.pink);
+            }
+            break;
+
+            case "com.example.animatch:drawable/chicken":
+            {
+                colorIcon.setImageResource(R.drawable.dark_blue);
+            }
+            break;
+
+            case "com.example.animatch:drawable/cow":
+            {
+                colorIcon.setImageResource(R.drawable.dark_green);
+            }
+            break;
+
+            case "com.example.animatch:drawable/penguin":
+            {
+                colorIcon.setImageResource(R.drawable.light_grey);
+            }
+            break;
+
+            case "com.example.animatch:drawable/zebra":
+            {
+                colorIcon.setImageResource(R.drawable.brown);
             }
             break;
         }
@@ -395,7 +456,7 @@ public class GameActivity extends AppCompatActivity
             setEmptyIcon();
 
             buttons[i].setImageResource(R.drawable.hidden);
-            buttons[i].setTag(animals.get(i));
+            buttons[i].setTag(getResources().getResourceName(animals.get(i)));
             buttons[i].setClickable(true);
             buttons[i].clearAnimation();
             buttons[i].setRotation(0);

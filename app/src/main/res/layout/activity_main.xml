@@ -19,7 +19,7 @@
 
         <ImageButton
             android:id="@+id/imageButtonMainMenu"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="200dp"
             android:adjustViewBounds="false"
             android:background="@drawable/color_icon"

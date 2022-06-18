@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#212121"
+    tools:context=".NewGameActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp">
+
+        <TextView
+            android:id="@+id/newGameTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:includeFontPadding="true"
+            android:text="@string/new_game"
+            android:textColor="#e0e0e0"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/difficultyTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:includeFontPadding="true"
+            android:text="@string/board_size_title"
+            android:textColor="#e0e0e0"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/easyButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/color_icon"
+                    android:backgroundTint="#212121"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/easy"
+                    tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/easyTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center"
+                    android:includeFontPadding="true"
+                    android:text="@string/easy"
+                    android:textColor="#e0e0e0"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/mediumButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/color_icon"
+                    android:backgroundTint="#212121"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/medium"
+                    tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/mediumTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center"
+                    android:includeFontPadding="true"
+                    android:text="@string/medium"
+                    android:textColor="#e0e0e0"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/hardButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:adjustViewBounds="false"
+                    android:background="@drawable/color_icon"
+                    android:backgroundTint="#212121"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/hard"
+                    tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+                <TextView
+                    android:id="@+id/hardTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dp"
+                    android:fontFamily="@font/roboto"
+                    android:gravity="center"
+                    android:includeFontPadding="true"
+                    android:text="@string/hard"
+                    android:textColor="#e0e0e0"
+                    android:textSize="25sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/backToMenu"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:backgroundTint="#212121"
+            android:clickable="true"
+            android:fontFamily="@font/roboto"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textColor="#e0e0e0"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

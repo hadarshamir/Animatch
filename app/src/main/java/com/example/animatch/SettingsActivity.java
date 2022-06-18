@@ -29,7 +29,8 @@ import java.util.Random;
 
 public class SettingsActivity extends AppCompatActivity
 {
-    private final String[]      colorsArray     = { "blue", "green", "grey", "pink", "red", "yellow" };
+    private final String[]      colorsArray     = { "blue", "brown", "dark_blue", "dark_green", "green",
+                                                    "grey", "light_grey", "pink", "red", "yellow" };
     private EditText            numOfObjects;
     private Spinner             colorPicker;
     private ScrollView          scrollView;
@@ -188,28 +189,40 @@ public class SettingsActivity extends AppCompatActivity
             if (isRandom)
             {
                 Random rand = new Random();
-                chosenColor = colorsArray[rand.nextInt(6)];
+                chosenColor = colorsArray[rand.nextInt(10)];
             }
 
             switch (chosenColor)
             {
                 case "blue":
-                { colorIcon.setImageResource(R.drawable.blue); }    break;
+                { colorIcon.setImageResource(R.drawable.blue); }        break;
+
+                case "brown":
+                { colorIcon.setImageResource(R.drawable.brown); }       break;
+
+                case "dark_blue":
+                { colorIcon.setImageResource(R.drawable.dark_blue); }   break;
+
+                case "dark_green":
+                { colorIcon.setImageResource(R.drawable.dark_green); }  break;
 
                 case "yellow":
-                { colorIcon.setImageResource(R.drawable.yellow); }  break;
+                { colorIcon.setImageResource(R.drawable.yellow); }      break;
 
                 case "green":
-                { colorIcon.setImageResource(R.drawable.green); }   break;
+                { colorIcon.setImageResource(R.drawable.green); }       break;
 
                 case "grey":
-                { colorIcon.setImageResource(R.drawable.grey); }    break;
+                { colorIcon.setImageResource(R.drawable.grey); }        break;
+
+                case "light_grey":
+                { colorIcon.setImageResource(R.drawable.light_grey); }  break;
 
                 case "red":
-                { colorIcon.setImageResource(R.drawable.red); }     break;
+                { colorIcon.setImageResource(R.drawable.red); }         break;
 
                 case "pink":
-                { colorIcon.setImageResource(R.drawable.pink); }    break;
+                { colorIcon.setImageResource(R.drawable.pink); }        break;
             }
             colorIcon.setClickable(false);
             colorIcon.setBackgroundColor(212121);

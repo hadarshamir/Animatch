@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="color_names">
+        <item>@string/brown</item>
         <item>@string/blue</item>
+        <item>@string/dark_blue</item>
+        <item>@string/dark_green</item>
         <item>@string/green</item>
         <item>@string/grey</item>
+        <item>@string/light_grey</item>
         <item>@string/pink</item>
         <item>@string/red</item>
         <item>@string/yellow</item>

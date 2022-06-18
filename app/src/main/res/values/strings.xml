@@ -34,4 +34,9 @@
     <string name="easy">easy</string>
     <string name="medium">medium</string>
     <string name="hard">hard</string>
+    <string name="board_size_title">select the board size</string>
+    <string name="dark_blue">dark blue</string>
+    <string name="dark_green">dark green</string>
+    <string name="light_grey">light grey</string>
+    <string name="brown">brown</string>
 </resources>
