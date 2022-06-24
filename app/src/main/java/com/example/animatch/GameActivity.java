@@ -8,7 +8,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -103,7 +102,7 @@ public class GameActivity extends MainActivity
             animals.add(j);
         }
 
-        /* Log tags for debug purposes (they change whenever a new drawable is added) */
+        /* Log tags for debug purposes */
         for (int i = 0; i < animalsArray.length; i++) {
             Log.d("stags: ", getResources().getResourceName(animals.get(i)));
             Log.d("tags: ", animals.get(i) + ", ");
@@ -333,16 +332,6 @@ public class GameActivity extends MainActivity
             saveScore();
             back.setText(R.string.next);
             isVictory = true;
-            /*new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-
-                    Intent goToVictory = new Intent(GameActivity.this,VictoryActivity.class);
-                    goToVictory.putExtra("difficulty", difficulty);
-                    goToVictory.putExtra("steps", stepsCount);
-                    startActivity(goToVictory);
-                }
-            }, 2000);*/
         }
     }
 

@@ -48,4 +48,5 @@
     <string name="you_matched_all">you matched all</string>
     <string name="the_animal_pairs">the animal pairs</string>
     <string name="difficulty">difficulty</string>
+    <string name="start_a_new_game">start a new game first!</string>
 </resources>

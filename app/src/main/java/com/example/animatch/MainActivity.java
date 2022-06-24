@@ -11,7 +11,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -68,8 +67,9 @@ public class MainActivity extends AppCompatActivity
 
     public SharedPreferences    sharedPreferences;
 
-    public static boolean       secretsEnabled = false;
-    public static boolean       shouldMute;
+    public  static boolean      secretsEnabled  = false;
+    public  static boolean      shouldMute      = true;
+    private static boolean      canContinue     = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -131,11 +131,16 @@ public class MainActivity extends AppCompatActivity
         continueButton = findViewById(R.id.continueButton);
 
         continueButton.setOnClickListener(v -> {
-            Log.d("difficulty", sharedPreferences.getString("DIFFICULTY", "NULL"));
-            Intent goToGame = new Intent(MainActivity.this, GameActivity.class);
-            goToGame.putExtra("difficulty", sharedPreferences.getString("DIFFICULTY", "NULL"));
-            vib.vibrate(vibrationEffectShort);
-            startActivity(goToGame);
+            if (canContinue) {
+                Intent goToGame = new Intent(MainActivity.this, GameActivity.class);
+                goToGame.putExtra("difficulty", sharedPreferences.getString("DIFFICULTY", "NULL"));
+                vib.vibrate(vibrationEffectShort);
+                startActivity(goToGame);
+            }
+            else {
+                toast = Toast.makeText(getApplicationContext(), getString(R.string.start_a_new_game), Toast.LENGTH_SHORT);
+                toast.show();
+            }
         });
 
         /* New game button logic */
@@ -197,12 +202,13 @@ public class MainActivity extends AppCompatActivity
 
         if (!sharedPreferences.getString("DIFFICULTY", "NULL").equals("NULL"))
         {
+            canContinue = true;
             continueButton.setClickable(true);
             continueButton.setPaintFlags(continueButton.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
         }
         else
         {
-            continueButton.setClickable(false);
+            canContinue = false;
             continueButton.setPaintFlags(continueButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         }
     }
