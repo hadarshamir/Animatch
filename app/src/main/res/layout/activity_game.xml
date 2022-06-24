@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#212121"
     android:keepScreenOn="true"
+    android:screenOrientation="portrait"
     tools:context=".GameActivity">
 
     <TextView
@@ -249,7 +250,7 @@
             android:textSize="25sp" />
 
         <Button
-            android:id="@+id/mute"
+            android:id="@+id/gameBack"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -257,7 +258,7 @@
             android:background="@android:color/transparent"
             android:backgroundTint="#212121"
             android:fontFamily="@font/roboto"
-            android:text="@string/music"
+            android:text="@string/menu"
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textColor="#e0e0e0"

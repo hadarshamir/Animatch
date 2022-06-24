@@ -2,6 +2,8 @@ package com.example.animatch;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -20,35 +22,47 @@ public class NewGameActivity extends MainActivity
         vib = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         VibrationEffect vibrationEffectShort = VibrationEffect.createOneShot(5, VibrationEffect.DEFAULT_AMPLITUDE);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("ANIMATCH", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        bgm.pause();
+
         Intent goToGame = new Intent(NewGameActivity.this, GameActivity.class);
 
-        /* easy button logic */
+        /* Easy button logic */
         ImageButton easyGameButton = findViewById(R.id.easyButton);
         easyGameButton.setOnClickListener(v -> {
+            editor.putString("DIFFICULTY", "easy");
+            editor.apply();
             goToGame.putExtra("difficulty", "easy");
             flip.start(); // Play sound on click
             vib.vibrate(vibrationEffectShort);
             startActivity(goToGame);
         });
 
-        /* medium button logic */
+        /* Medium button logic */
         ImageButton mediumGameButton = findViewById(R.id.mediumButton);
         mediumGameButton.setOnClickListener(v -> {
+            editor.putString("DIFFICULTY", "medium");
+            editor.apply();
             goToGame.putExtra("difficulty", "medium");
             flip.start(); // Play sound on click
             vib.vibrate(vibrationEffectShort);
             startActivity(goToGame);
         });
 
-        /* hard button logic */
+        /* Hard button logic */
         ImageButton hardGameButton = findViewById(R.id.hardButton);
         hardGameButton.setOnClickListener(v -> {
+            editor.putString("DIFFICULTY", "hard");
+            editor.apply();
             goToGame.putExtra("difficulty", "hard");
             flip.start(); // Play sound on click
             vib.vibrate(vibrationEffectShort);
             startActivity(goToGame);
         });
 
+        /* Back button logic */
         Button back = findViewById(R.id.backToMenu);
         back.setOnClickListener(v ->
         {
@@ -61,6 +75,19 @@ public class NewGameActivity extends MainActivity
     protected void onPause()
     {
         super.onPause();
-        bgm.pause();
+        settingsBgm.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!shouldMute())
+        {
+            settingsBgm.pause();
+        }
+        else
+        {
+            settingsBgm.start();
+        }
     }
 }

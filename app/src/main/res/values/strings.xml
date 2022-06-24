@@ -39,4 +39,9 @@
     <string name="dark_green">dark green</string>
     <string name="light_grey">light grey</string>
     <string name="brown">brown</string>
+    <string name="warning">warning</string>
+    <string name="progression_deleted">your progression</string>
+    <string name="will_be">will be deleted</string>
+    <string name="menu">menu</string>
+    <string name="next">next</string>
 </resources>

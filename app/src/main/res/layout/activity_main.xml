@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#212121"
+    android:screenOrientation="portrait"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -183,7 +184,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:includeFontPadding="true"
-                    android:text="15"
                     android:textColor="#e0e0e0"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@id/grid"
@@ -198,7 +198,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:includeFontPadding="true"
-                    android:text="28"
                     android:textColor="#e0e0e0"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@id/grid"
@@ -213,7 +212,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto"
                     android:includeFontPadding="true"
-                    android:text="42"
                     android:textColor="#e0e0e0"
                     android:textSize="20sp"
                     app:layout_constraintBottom_toTopOf="@id/grid"

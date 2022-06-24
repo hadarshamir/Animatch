@@ -2,7 +2,7 @@ package com.example.animatch;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class GameActivity extends NewGameActivity
+public class GameActivity extends MainActivity
 {
     /* Declarations */
     private ImageButton[]       buttons             = null;
@@ -31,19 +31,19 @@ public class GameActivity extends NewGameActivity
                                                         false, false, false, false,
                                                         false, false, false, false,
                                                         false, false, false, false };
+    private List<Integer>       animals;
     private int                 pressedCount        = 0;
     private int                 matchCount          = 0;
     private int                 stepsCount          = 0;
-    private boolean             shouldMute          = true;
     private boolean             emptyIcon           = true;
     private int                 rotateDirection     = 1;
     private int                 secretsCount        = 4;
-    private boolean             secretsEnabled      = false;
+    private String              difficulty;
 
     private LinearLayout        colorIcons;
     private ImageButton         colorIcon;
     private TextView            title;
-    private Button              steps, mute;
+    private Button              steps;
 
     private Intent              goToSettings;
 
@@ -58,7 +58,7 @@ public class GameActivity extends NewGameActivity
         colorIcons   = findViewById(R.id.colorMatchLayout);
         Button reset = findViewById(R.id.reset);
         steps        = findViewById(R.id.steps);
-        mute         = findViewById(R.id.mute);
+        Button back = findViewById(R.id.gameBack);
 
         setEmptyIcon(); // Set the empty space between the color icons and the controls
 
@@ -66,16 +66,14 @@ public class GameActivity extends NewGameActivity
         buttons = new ImageButton[20];
 
         /* Init animals array as list */
-        List<Integer> animals = new ArrayList<>();
+        animals = new ArrayList<>();
 
         GridLayout gridLayout = findViewById(R.id.grid);
         gridLayout.removeAllViews();
 
-        String difficulty = getIntent().getStringExtra("difficulty");
-        switch (difficulty)
-        {
-            case "easy":
-            {
+        difficulty = getIntent().getStringExtra("difficulty");
+        switch (difficulty) {
+            case "easy": {
                 animalsArray = animalsArrayEasy;
                 gridLayout.setColumnCount(2);
                 gridLayout.setRowCount(3);
@@ -83,8 +81,7 @@ public class GameActivity extends NewGameActivity
             }
             break;
 
-            case "medium":
-            {
+            case "medium": {
                 animalsArray = animalsArrayMedium;
                 gridLayout.setColumnCount(3);
                 gridLayout.setRowCount(4);
@@ -92,8 +89,7 @@ public class GameActivity extends NewGameActivity
             }
             break;
 
-            case "hard":
-            {
+            case "hard": {
                 animalsArray = animalsArrayHard;
                 gridLayout.setColumnCount(4);
                 gridLayout.setRowCount(5);
@@ -101,14 +97,12 @@ public class GameActivity extends NewGameActivity
             }
             break;
         }
-        for (int j : animalsArray)
-        {
+        for (int j : animalsArray) {
             animals.add(j);
         }
 
         /* Log tags for debug purposes (they change whenever a new drawable is added) */
-        for (int i = 0; i < animalsArray.length; i++)
-        {
+        for (int i = 0; i < animalsArray.length; i++) {
             Log.d("stags: ", getResources().getResourceName(animals.get(i)));
             Log.d("tags: ", animals.get(i) + ", ");
         }
@@ -117,8 +111,7 @@ public class GameActivity extends NewGameActivity
         Collections.shuffle(animals);
 
         /* Card button logic */
-        for (int index = 0; index < animalsArray.length; index++)
-        {
+        for (int index = 0; index < animalsArray.length; index++) {
             final int i = index;
             buttons[i].setOnClickListener(v ->
             {
@@ -128,8 +121,7 @@ public class GameActivity extends NewGameActivity
                 if (pressedArray[i]) // Face up
                 {
                     pressedCount--;
-                }
-                else // Face down
+                } else // Face down
                 {
                     pressedCount++;
                     steps.setText(String.valueOf(++stepsCount)); // Update steps only on face up flip
@@ -166,7 +158,7 @@ public class GameActivity extends NewGameActivity
             {
                 toast.cancel();
             }
-            goToSettings = new Intent(GameActivity.this, SettingsActivity.class);
+            goToSettings = new Intent(GameActivity.this, DebugActivity.class);
             vib.vibrate(vibrationEffectShort);
             if (secretsCount == 1)
             {
@@ -198,11 +190,11 @@ public class GameActivity extends NewGameActivity
             }
         });
 
-        /* Mute button logic */
-        mute.setOnClickListener(v ->
+        /* Back button logic */
+        back.setOnClickListener(v ->
         {
-            mute(mute, shouldMute);
-            shouldMute = !shouldMute;
+            Intent goToMenu = new Intent(GameActivity.this, MainActivity.class);
+            startActivity(goToMenu);
             vib.vibrate(vibrationEffectShort);
         });
 
@@ -325,6 +317,7 @@ public class GameActivity extends NewGameActivity
                 buttons[i].setRotation(0);
                 buttons[i].animate().rotation(rotateDirection * 360).setDuration(500);
             }
+            saveScore();
         }
     }
 
@@ -469,20 +462,6 @@ public class GameActivity extends NewGameActivity
         }
     }
 
-    private void mute(Button muteButton, boolean shouldMute)
-    {
-        if (shouldMute)
-        {
-            bgm.pause();
-            muteButton.setPaintFlags(muteButton.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        }
-        else
-        {
-            bgm.start();
-            muteButton.setPaintFlags(muteButton.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-        }
-    }
-
     private void setEmptyIcon()
     {
         colorIcons.removeAllViews();
@@ -493,6 +472,33 @@ public class GameActivity extends NewGameActivity
         colorIcon.setBackgroundColor(212121);
         colorIcon.setScaleType(ImageView.ScaleType.FIT_CENTER);
         colorIcons.addView(colorIcon, 100, 100);
+    }
+
+    private void saveScore()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("ANIMATCH", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        switch (difficulty)
+        {
+            case "easy":
+            {
+                editor.putInt("STEPS_EASY", stepsCount);
+            }
+            break;
+
+            case "medium":
+            {
+                editor.putInt("STEPS_MEDIUM", stepsCount);
+            }
+            break;
+
+            case "hard":
+            {
+                editor.putInt("STEPS_HARD", stepsCount);
+            }
+            break;
+        }
+        editor.apply();
     }
 
     @Override
@@ -507,11 +513,22 @@ public class GameActivity extends NewGameActivity
     protected void onResume()
     {
         super.onResume();
-        if (shouldMute)
+        if (!shouldMute())
+        {
+            bgm.pause();
+        }
+        else
         {
             bgm.start();
         }
         mSensorManager.registerListener(mSensorListener, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent goToMenu = new Intent(GameActivity.this, MainActivity.class);
+        startActivity(goToMenu);
+        vib.vibrate(vibrationEffectShort);
     }
 }
