@@ -45,4 +45,8 @@
     <string name="will_be">שלכם תמחק</string>
     <string name="menu">תפריט</string>
     <string name="next">הבא</string>
+    <string name="great_job">עבודה טובה!</string>
+    <string name="you_matched_all">התאמתם את כל</string>
+    <string name="the_animal_pairs">זוגות החיות</string>
+    <string name="difficulty">קושי</string>
 </resources>

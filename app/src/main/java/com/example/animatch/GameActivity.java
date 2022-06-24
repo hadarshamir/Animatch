@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -34,16 +35,17 @@ public class GameActivity extends MainActivity
     private List<Integer>       animals;
     private int                 pressedCount        = 0;
     private int                 matchCount          = 0;
-    private int                 stepsCount          = 0;
+    public  int                 stepsCount          = 0;
     private boolean             emptyIcon           = true;
     private int                 rotateDirection     = 1;
     private int                 secretsCount        = 4;
-    private String              difficulty;
+    public  String              difficulty;
+    private boolean             isVictory = false;
 
     private LinearLayout        colorIcons;
     private ImageButton         colorIcon;
     private TextView            title;
-    private Button              steps;
+    private Button              steps, back;
 
     private Intent              goToSettings;
 
@@ -58,7 +60,7 @@ public class GameActivity extends MainActivity
         colorIcons   = findViewById(R.id.colorMatchLayout);
         Button reset = findViewById(R.id.reset);
         steps        = findViewById(R.id.steps);
-        Button back = findViewById(R.id.gameBack);
+        back         = findViewById(R.id.gameBack);
 
         setEmptyIcon(); // Set the empty space between the color icons and the controls
 
@@ -193,9 +195,20 @@ public class GameActivity extends MainActivity
         /* Back button logic */
         back.setOnClickListener(v ->
         {
-            Intent goToMenu = new Intent(GameActivity.this, MainActivity.class);
-            startActivity(goToMenu);
-            vib.vibrate(vibrationEffectShort);
+            if (isVictory)
+            {
+                Intent goToVictory = new Intent(GameActivity.this,VictoryActivity.class);
+                goToVictory.putExtra("difficulty", difficulty);
+                goToVictory.putExtra("steps", stepsCount);
+                startActivity(goToVictory);
+                vib.vibrate(vibrationEffectShort);
+            }
+            else
+            {
+                Intent goToMenu = new Intent(GameActivity.this, MainActivity.class);
+                startActivity(goToMenu);
+                vib.vibrate(vibrationEffectShort);
+            }
         });
 
         /* Accelerometer logic */
@@ -318,6 +331,18 @@ public class GameActivity extends MainActivity
                 buttons[i].animate().rotation(rotateDirection * 360).setDuration(500);
             }
             saveScore();
+            back.setText(R.string.next);
+            isVictory = true;
+            /*new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+
+                    Intent goToVictory = new Intent(GameActivity.this,VictoryActivity.class);
+                    goToVictory.putExtra("difficulty", difficulty);
+                    goToVictory.putExtra("steps", stepsCount);
+                    startActivity(goToVictory);
+                }
+            }, 2000);*/
         }
     }
 
@@ -459,6 +484,8 @@ public class GameActivity extends MainActivity
             pressedArray[i] = false;
             pressedCount    = 0;
             matchCount      = 0;
+            isVictory       = false;
+            back.setText(R.string.menu);
         }
     }
 

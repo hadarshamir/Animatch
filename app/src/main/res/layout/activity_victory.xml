@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#212121"
+    android:screenOrientation="portrait"
+    tools:context=".VictoryActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/imageButtonMainMenu"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:adjustViewBounds="false"
+            android:background="@drawable/color_icon"
+            android:backgroundTint="#212121"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/trophy"
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/greatJob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:includeFontPadding="true"
+            android:text="@string/great_job"
+            android:textColor="#e0e0e0"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/grid"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/matched1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/roboto"
+            android:includeFontPadding="true"
+            android:text="@string/you_matched_all"
+            android:lineSpacingExtra="10dp"
+            android:textColor="#e0e0e0"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/grid"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/matched2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="@font/roboto"
+            android:includeFontPadding="true"
+            android:text="@string/the_animal_pairs"
+            android:lineSpacingExtra="10dp"
+            android:textColor="#e0e0e0"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/grid"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="25dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="25dp"
+            android:gravity="center">
+
+            <LinearLayout
+                android:id="@+id/victoryDifficultyLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/victoryDifficultyTitle"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="#212121"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/difficulty"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="#e0e0e0"
+                    android:textSize="25sp" />
+
+                <Button
+                    android:id="@+id/victoryScoreTitle"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="#212121"
+                    android:fontFamily="@font/roboto"
+                    android:text="@string/steps"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="#e0e0e0"
+                    android:textSize="25sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/victoryStepsLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/victoryDifficulty"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="#212121"
+                    android:fontFamily="@font/roboto"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="#e0e0e0"
+                    android:textSize="25sp" />
+
+                <Button
+                    android:id="@+id/victoryScore"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="#212121"
+                    android:fontFamily="@font/roboto"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:textColor="#e0e0e0"
+                    android:textSize="25sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/settingButtonsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="25dp">
+
+            <Button
+                android:id="@+id/victoryMenuButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:backgroundTint="#212121"
+                android:fontFamily="@font/roboto"
+                android:text="@string/menu"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#e0e0e0"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/victoryNextButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:backgroundTint="#212121"
+                android:fontFamily="@font/roboto"
+                android:text="@string/next"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#e0e0e0"
+                android:textSize="25sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

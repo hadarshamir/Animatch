@@ -44,4 +44,8 @@
     <string name="will_be">will be deleted</string>
     <string name="menu">menu</string>
     <string name="next">next</string>
+    <string name="great_job">great job!</string>
+    <string name="you_matched_all">you matched all</string>
+    <string name="the_animal_pairs">the animal pairs</string>
+    <string name="difficulty">difficulty</string>
 </resources>
